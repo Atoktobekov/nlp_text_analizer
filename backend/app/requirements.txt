@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+spacy==3.6.0
+scikit-learn
+nltk
+python-multipart

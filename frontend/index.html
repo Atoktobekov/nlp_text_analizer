@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NLP Text Processor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>NLP: Text processing & N-Gram analysis</h1>
+
+    <textarea id="inputText" placeholder="Вставь текст сюда..." rows="10"></textarea>
+
+    <div class="controls">
+      <label>Top K:
+        <input id="topK" type="number" value="20" min="1" max="200" />
+      </label>
+      <label>
+        <input id="useVectorizer" type="checkbox" />
+        use vectorizer for ngrams
+      </label>
+      <button id="processBtn">Process</button>
+    </div>
+
+    <div id="result" class="result">
+      <h2>Result</h2>
+      <div id="cleaned"></div>
+
+      <h3>Top words</h3>
+      <ol id="wordsList"></ol>
+
+      <h3>Top bigrams</h3>
+      <ol id="bigramsList"></ol>
+
+      <h3>Top trigrams</h3>
+      <ol id="trigramsList"></ol>
+
+      <h3>Tokens (excerpt)</h3>
+      <div id="tokens"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
