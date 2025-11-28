@@ -1,5 +1,222 @@
 # NLP Text Processor
 
+Web application for text processing using NLP: tokenization, lemmatization, stemming, n-gram analysis.
+
+## 📁 Project Structure
+
+```
+project/
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── processing.py
+│   │   ├── model_setup.py
+│   │   └── requirements.txt
+│   └── Dockerfile
+├── frontend/
+│   ├── index.html
+│   ├── app.js
+│   └── styles.css
+├── docker-compose.yml
+├── nginx.conf
+├── .gitignore
+└── README.md
+```
+
+## 🚀 Getting Started
+
+### Option 1: Docker (Recommended)
+
+**Requirements:**
+- Docker
+- Docker Compose
+
+**Launch:**
+
+```bash
+# Build and run
+docker-compose up --build
+
+# Run in background
+docker-compose up -d --build
+```
+
+**Access:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+
+**Stop:**
+```bash
+docker-compose down
+```
+
+---
+
+### Option 2: Local Setup
+
+#### Backend
+
+**Requirements:**
+- Python 3.11+
+- pip
+
+**Installation:**
+
+```bash
+cd backend/app
+
+# Create virtual environment (optional)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Download spaCy model
+python -m spacy download en_core_web_sm
+
+# Run server
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Backend will be available at http://localhost:8000
+
+#### Frontend
+
+**Simple way (Python):**
+```bash
+cd frontend
+python -m http.server 3000
+```
+
+**Or with Node.js:**
+```bash
+cd frontend
+npx serve -p 3000
+```
+
+Frontend will be available at http://localhost:3000
+
+---
+
+## 🔧 Configuration
+
+### Backend (main.py)
+
+Change CORS origins for production:
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://your-domain.com"],  # specify your domain
+    ...
+)
+```
+
+### Frontend (app.js)
+
+Backend URL is detected automatically, but can be set manually:
+```javascript
+const API_URL = "https://your-api-domain.com/process";
+```
+
+---
+
+## 📝 API Endpoints
+
+### POST /process
+
+Process text
+
+**Request:**
+```json
+{
+  "text": "Your text here",
+  "top_k": 20,
+  "use_vectorizer_for_ngrams": false
+}
+```
+
+**Response:**
+```json
+{
+  "cleaned_text": "cleaned text",
+  "tokens": ["token1", "token2"],
+  "lemmas": ["lemma1", "lemma2"],
+  "stems": ["stem1", "stem2"],
+  "top_words": [{"term": "word", "count": 5}],
+  "top_bigrams": [{"ngram": "word1 word2", "count": 3}],
+  "top_trigrams": [{"ngram": "word1 word2 word3", "count": 2}]
+}
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### spaCy model not found
+```bash
+python -m spacy download en_core_web_sm
+```
+
+### NLTK data not found
+```python
+import nltk
+nltk.download('punkt')
+```
+
+### CORS errors
+Check CORS settings in `main.py` - frontend origin must be allowed
+
+### Docker issues
+```bash
+# Rebuild without cache
+docker-compose build --no-cache
+
+# Check logs
+docker-compose logs backend
+docker-compose logs frontend
+```
+
+---
+
+## 📦 Dependencies
+
+**Backend:**
+- FastAPI - web framework
+- spaCy - NLP processing
+- scikit-learn - vectorization
+- NLTK - n-grams and stemming
+- uvicorn - ASGI server
+
+**Frontend:**
+- Vanilla JavaScript
+- HTML/CSS
+
+---
+
+## 🎯 Features
+
+- ✅ Text cleaning (punctuation and numbers removal)
+- ✅ Tokenization
+- ✅ Lemmatization (spaCy)
+- ✅ Stemming (Porter Stemmer)
+- ✅ Stop words removal
+- ✅ Word frequency analysis
+- ✅ Bigrams and trigrams analysis
+- ✅ Two methods for n-grams (NLTK and CountVectorizer)
+
+---
+
+## 📄 License
+
+MIT
+
+
+---
+
+# NLP Text Processor
+
 Веб-приложение для обработки текста с использованием NLP: токенизация, лемматизация, стемминг, анализ n-грамм.
 
 ## 📁 Структура проекта
