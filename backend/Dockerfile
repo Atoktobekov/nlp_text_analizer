@@ -6,10 +6,14 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
+    g++ \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
 COPY app/requirements.txt .
+
+# Upgrade pip and install wheel
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
