@@ -9,7 +9,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend/app:/app
+      - ./backend/app:/app  # чтобы изменения в коде подтягивались локально
     environment:
       - PYTHONUNBUFFERED=1
     restart: unless-stopped

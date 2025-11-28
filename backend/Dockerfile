@@ -1,34 +1,31 @@
-# backend/Dockerfile
+# Use slim Python 3.11
 FROM python:3.11-slim
 
+# Set working directory
 WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    g++ \
-    && rm -rf /var/lib/apt/lists/*
+    gcc g++ curl && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
-COPY app/requirements.txt .
+# Copy requirements first for caching
+COPY app/requirements.txt ./requirements.txt
 
-# Upgrade pip and install wheel
+# Upgrade pip and install dependencies
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-
-# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Download spaCy model
 RUN python -m spacy download en_core_web_sm
 
-# Download NLTK data
+# Download NLTK punkt
 RUN python -c "import nltk; nltk.download('punkt', quiet=True)"
 
 # Copy application code
-COPY app/ .
+COPY app/ . 
 
 # Expose port
 EXPOSE 8000
 
-# Run the application
+# Start FastAPI
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
