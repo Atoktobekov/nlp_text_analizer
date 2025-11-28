@@ -22,7 +22,7 @@ RUN python -m spacy download en_core_web_sm
 RUN python -c "import nltk; nltk.download('punkt', quiet=True)"
 
 # Copy application code
-COPY app/ . 
+COPY ./app ./ 
 
 # Expose port
 EXPOSE 8000
