@@ -43,12 +43,15 @@ def process(req: ProcessRequest):
     if req.use_vectorizer_for_ngrams:
         bigrams = text_get_ngrams_by_vectorizer(cleaned, 2, top_k)
         trigrams = text_get_ngrams_by_vectorizer(cleaned, 3, top_k)
-        # convert names back to tuples for consistency in frontend if desired
 
     # prepare JSON serializable output
     def pair_to_json(pair):
         if isinstance(pair[0], tuple):
+            # For ngrams from freq_ngrams (tuples)
             return {"ngram": " ".join(pair[0]), "count": pair[1]}
+        elif isinstance(pair[0], str):
+            # For ngrams from vectorizer (strings)
+            return {"ngram": pair[0], "count": pair[1]}
         else:
             return {"term": pair[0], "count": pair[1]}
 

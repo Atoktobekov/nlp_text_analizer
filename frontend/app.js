@@ -7,10 +7,10 @@ const API_URL = window.location.hostname === 'localhost' || window.location.host
 document.getElementById("processBtn").addEventListener("click", async () => {
     const text = document.getElementById("inputText").value;
     const topK = Number(document.getElementById("topK").value) || 20;
-    const useVectorizer = document.getElementById("useVectorizer").checked;
+    const useVectorizer = false;//document.getElementById("useVectorizer").checked;
 
     if (!text.trim()) {
-        alert("Вставь текст");
+        alert("Insert text.");
         return;
     }
 
@@ -45,6 +45,7 @@ function toggleButton(disable) {
 
 function showResult(data) {
     document.getElementById("cleaned").textContent = "Cleaned: " + data.cleaned_text.slice(0, 1000);
+    
     const wordsList = document.getElementById("wordsList");
     wordsList.innerHTML = "";
     data.top_words.forEach(w => {
@@ -57,7 +58,9 @@ function showResult(data) {
     bigramsList.innerHTML = "";
     data.top_bigrams.forEach(b => {
         const li = document.createElement("li");
-        li.textContent = (b.ngram ? b.ngram : b.term) + " — " + b.count;
+        // Универсальный доступ к данным ngram
+        const ngramText = b.ngram || b.term;
+        li.textContent = ngramText + " — " + b.count;
         bigramsList.appendChild(li);
     });
 
@@ -65,7 +68,9 @@ function showResult(data) {
     trigramsList.innerHTML = "";
     data.top_trigrams.forEach(t => {
         const li = document.createElement("li");
-        li.textContent = (t.ngram ? t.ngram : t.term) + " — " + t.count;
+        // Универсальный доступ к данным ngram
+        const ngramText = t.ngram || t.term;
+        li.textContent = ngramText + " — " + t.count;
         trigramsList.appendChild(li);
     });
 
